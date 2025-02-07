@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: transparent;
+            color: #000000;
+        }
+
+        /* Packages Section Styles */
+        .packages-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 120px 5% 50px;
+            position: relative;
+        }
+
+        .packages-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .packages-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .packages-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .packages-title {
+            font-size: 4rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .packages-subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .toggle-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #39FF14;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .toggle-btn.active {
+            background: #39FF14;
+            color: #000000;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #39FF14;
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 600px;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .package-name {
+            font-size: 1.8rem;
+            color: #39FF14;
+            margin-bottom: 1rem;
+        }
+
+        .package-price {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: #39FF14;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            flex-grow: 1;
+        }
+
+        .feature-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: #39FF14;
+        }
+
+        .package-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #39FF14;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #39FF14;
+            margin-top: auto;
+        }
+
+        .package-btn:hover {
+            background: #000000;
+            color: #39FF14;
+        }
+
+        @media (max-width: 1200px) {
+            .packages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            .packages-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html" class="active">Packages</a>
+            <a href="community.html">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Packages Section -->
+    <div class="packages-section" style="background-image: url('pack1.jpg');">
+        <div class="packages-overlay"></div>
+        <div class="packages-content">
+            <div class="packages-header">
+                <h1 class="packages-title">Our membership packages</h1>
+                <p class="packages-subtitle">Find the perfect membership plan for you and take the first step toward mastering crypto trading with RINXO Trading today!</p>
+                
+                <div class="toggle-container">
+                    <button class="toggle-btn active" id="monthlyBtn">Monthly</button>
+                    <button class="toggle-btn" id="sixMonthBtn">Six Months</button>
+                </div>
+            </div>
+
+            <div class="packages-grid">
+                <!-- Free Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Free Pack</h2>
+                        <div class="package-price">0€</div>
+                        <ul class="features-list">
+                            <li class="feature-item">Market Analysis</li>
+                            <li class="feature-item">Weekly Newsletters</li>
+                            <li class="feature-item">Weekly free signal</li>
+                            <li class="feature-item">News Coverage</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Try for free</button>
+                </div>
+
+                <!-- Starter Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Starter Pack</h2>
+                        <div class="package-price monthly-price">44.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">89.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex Pairs Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">XAUUSD Signals</li>
+                            <li class="feature-item">Risk Managment</li>
+                            <li class="feature-item">TA Analysis</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get started</button>
+                </div>
+
+                <!-- Basic Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Basic Pack</h2>
+                        <div class="package-price monthly-price">64.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">104.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex & XAUUSD Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">TA Analysis</li>
+                            <li class="feature-item">Risk Management</li>
+                            <li class="feature-item">Copy Trading our EA</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get started</button>
+                </div>
+
+                <!-- Pro Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Pro Pack</h2>
+                        <div class="package-price monthly-price">89.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">149.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex & XAUUSD Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">TA & Fundamental Analysis</li>
+                            <li class="feature-item">Risk Managment</li>
+                            <li class="feature-item">Rinxo Trading Course</li>
+                            <li class="feature-item">Copy Trading our EA</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePricing(period) {
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const sixMonthPrices = document.querySelectorAll('.sixmonth-price');
+            const monthlyBtn = document.getElementById('monthlyBtn');
+            const sixMonthBtn = document.getElementById('sixMonthBtn');
+            const periodTexts = document.querySelectorAll('.price-period');
+            
+            if (period === 'monthly') {
+                monthlyPrices.forEach(price => price.style.display = 'block');
+                sixMonthPrices.forEach(price => price.style.display = 'none');
+                monthlyBtn.classList.add('active');
+                sixMonthBtn.classList.remove('active');
+                periodTexts.forEach(text => text.textContent = '/ month');
+            } else {
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                sixMonthPrices.forEach(price => price.style.display = 'block');
+                monthlyBtn.classList.remove('active');
+                sixMonthBtn.classList.add('active');
+                periodTexts.forEach(text => text.textContent = '/ 6 months');
+            }
+        }
+
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const monthlyBtn = document.getElementById('monthlyBtn');
+            const sixMonthBtn = document.getElementById('sixMonthBtn');
+
+            // Add click event listeners
+            monthlyBtn.addEventListener('click', () => togglePricing('monthly'));
+            sixMonthBtn.addEventListener('click', () => togglePricing('sixMonths'));
+
+            // Set initial state
+            togglePricing('monthly');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact Us - RinxoTrading</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+    
+            /* Navigation Bar Styles */
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 2rem;
+                background-color: #39FF14;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                z-index: 1000;
+                transition: all 0.3s ease;
+                box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            }
+    
+            .nav-left {
+                display: flex;
+                align-items: center;
+            }
+    
+            .logo {
+                height: 40px;
+                margin-right: 1rem;
+                transition: transform 0.3s ease;
+            }
+    
+            .logo:hover {
+                transform: scale(1.1);
+            }
+    
+            .brand-name {
+                color: #000000;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+    
+            .nav-middle a {
+                color: #000000;
+                text-decoration: none;
+                margin: 0 1rem;
+                padding: 0.5rem 1rem;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+    
+            .nav-middle a:hover, .nav-middle a.active {
+                color: #000000;
+                transform: translateY(-2px);
+            }
+    
+            .nav-middle a::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 50%;
+                background-color: #000000;
+                transition: all 0.3s ease;
+            }
+    
+            .nav-middle a:hover::after, .nav-middle a.active::after {
+                width: 100%;
+                left: 0;
+            }
+    
+            .contact-btn {
+                background-color: #000000;
+                color: #39FF14;
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                border: 2px solid #000000;
+            }
+    
+            .contact-btn:hover {
+                background-color: transparent;
+                color: #000000;
+            }
+    
+            /* Contact Section Styles */
+            .contact-section {
+                min-height: 100vh;
+                background-size: cover;
+                background-position: center;
+                padding: 120px 5% 50px;
+                position: relative;
+            }
+    
+            .contact-content {
+                position: relative;
+                z-index: 2;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+    
+            .contact-left {
+                color: #ffffff;
+            }
+    
+            .contact-title {
+                font-size: 4rem;
+                color: #ffffff;
+                margin-bottom: 2rem;
+            }
+    
+            .contact-info {
+                margin-top: 2rem;
+            }
+    
+            .contact-item {
+                margin-bottom: 1rem;
+            }
+    
+            .contact-link {
+                color: #39FF14;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+    
+            .contact-link:hover {
+                color: #ffffff;
+            }
+    
+            .contact-form {
+                background: rgba(0, 0, 0, 0.8);
+                padding: 2rem;
+                border-radius: 10px;
+                border: 2px solid #39FF14;
+            }
+    
+            .form-input {
+                width: 100%;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid #39FF14;
+                border-radius: 5px;
+                color: #ffffff;
+                font-size: 1rem;
+            }
+    
+            .form-input::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+    
+            .message-input {
+                min-height: 150px;
+                resize: vertical;
+            }
+    
+            .send-btn {
+                background: #39FF14;
+                color: #000000;
+                padding: 1rem 2rem;
+                border: none;
+                border-radius: 5px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 100%;
+                font-weight: 600;
+            }
+    
+            .send-btn:hover {
+                background: transparent;
+                color: #39FF14;
+                border: 2px solid #39FF14;
+            }
+    
+            @media (max-width: 768px) {
+                .contact-content {
+                    grid-template-columns: 1fr;
+                }
+                
+                .contact-title {
+                    font-size: 2.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+                <span class="brand-name">RinxoTrading</span>
+            </div>
+            
+            <div class="nav-middle">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="results.html">Results</a>
+                <a href="packages.html">Packages</a>
+                <a href="community.html">Community</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            
+            <div class="nav-right">
+                <a href="contact.html" class="contact-btn">Contact Us</a>
+            </div>
+        </nav>
+    
+        <!-- Contact Section -->
+        <section class="contact-section" style="background-image: url('concat2.jpg');">
+            <div class="overlay"></div>
+            <div class="contact-content">
+                <div class="contact-left">
+                    <h1 class="contact-title">Get in touch</h1>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <a href="mailto:info@rinxotrading.com" class="contact-link">rinxotrading@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="tel:+383484804333" class="contact-link">+383 44 386 663 </a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="contact-right">
+                    <form class="contact-form">
+                        <input type="text" placeholder="Name: *" class="form-input" required>
+                        <input type="email" placeholder="Email: *" class="form-input" required>
+                        <textarea placeholder="Message: *" class="form-input message-input" required></textarea>
+                        <button type="submit" class="send-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    
+        <script>
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        </script>
+    </body>
+    </html>
+</body>
+</html>

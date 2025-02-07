@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RinxoTrading</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(57, 255, 20, 0.9);
+            padding: 0.5rem 2rem;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 80px;
+            margin-right: 1rem;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            font-family: Verdana, Geneva, sans-serif;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: #39FF14;
+            color: #000000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .text-container {
+            flex: 1;
+            max-width: 600px;
+            padding-right: 40px;
+        }
+
+        .main-heading {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #39FF14;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(28, 197, 36, 0.89);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 500px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:first-child {
+            background-color: transparent;
+            border: 2px solid #39FF14;
+            color: #39FF14;
+        }
+
+        .cta-button.telegram {
+            background-color: #39FF14;
+            color: #000000;
+        }
+
+        .image-container {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            max-width: 200%;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-heading {
+                font-size: 3rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 0;
+            }
+            
+            .text-container {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .subtitle {
+                margin: 0 auto 2.5rem auto;
+            }
+            
+            .button-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html">Packages</a>
+            <a href="community.html">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section" style="background-image: url('ABOUTUS.avif');">
+        <div class="hero-content">
+            <div class="text-container fade-in">
+                <h1 class="main-heading">RINXO 24/7: <br>Precision<br>Profit, Power</h1>
+                <p class="subtitle">Our team of analysts provides you with in-depth research and analysis to help you make informed investment decisions.</p>
+                <div class="button-container">
+                    <a href="packages.html" class="cta-button">Packages</a>
+                    <a href="https://t.me/your-telegram" class="cta-button telegram">Join for free</a>
+                </div>
+            </div>
+            <div class="image-container fade-in">
+                <!-- Add your trading chart image here -->
+                <img src="kapuqrinxo.png" alt="Trading Chart" class="hero-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in elements on scroll
+        function checkFade() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                
+                if (elementTop < window.innerHeight && elementBottom > 0) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Check fade on load
+        window.addEventListener('load', checkFade);
+        // Check fade on scroll
+        window.addEventListener('scroll', checkFade);
+
+        // Navigation active state
+        const currentLocation = location.href;
+        const menuItems = document.querySelectorAll('.nav-middle a');
+        menuItems.forEach(item => {
+            if(item.href === currentLocation) {
+                item.classList.add('active');
+            }
+        });
+    </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(57, 255, 20, 0.9);
+            padding: 0.5rem 2rem;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: #39FF14;
+            color: #000000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* About Page Specific Styles */
+        .about-hero {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .about-overlay {
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .about-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-title {
+            font-size: 4rem;
+            color: #39FF14;
+            margin-bottom: 4rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 5%;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #39FF14;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(57, 255, 20, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+
+        .stat-box:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .counter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #39FF14;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        .plus {
+            font-size: 2.5rem;
+            color: #39FF14;
+            margin-left: 5px;
+        }
+
+        .stat-text {
+            color: #ffffff;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #39FF14;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .about-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html">Packages</a>
+            <a href="community.html">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- About Hero Section -->
+    <div class="about-hero" style="background-image: url('ABOUTUS.avif');">
+        <div class="about-overlay"></div>
+        <div class="about-content">
+            <h1 class="about-title">About Us</h1>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="counter" data-target="5">0</span>
+                    <div class="stat-text">Years of experience</div>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="counter" data-target="3">0</span>
+                    <div class="stat-text">Bull Markets</div>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="counter" data-target="1300">0</span>
+                    <div class="stat-text">Members in our communities</div>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="counter" data-target="1000">0</span>
+                    <span class="plus">+</span>
+                    <div class="stat-text">Accurate signals</div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Welcome to RinxoTrading - Your Ultimate Gateway to Forex & Crypto Trading Success</h2>
+                <p class="section-text">
+                    At RINXO Trading, we are a dedicated team of experienced analysts focused on empowering traders to excel in both Forex and cryptocurrency markets. Our mission is to provide you with the highest-quality market insights, accurate signals, and comprehensive strategies to help you navigate the complexities of global financial markets. With RINXO Trading, you gain the advantage of a professional team working around the clock to ensure you make informed, confident trading decisions to optimize your profitability in an ever-changing market landscape.
+                </p>
+
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-text">
+                    At RINXO Trading, our team of seasoned experts brings a wealth of knowledge in Forex and cryptocurrency markets. We are driven by a commitment to providing precise analysis, accurate signals, and strategic insights to guide your trading journey.
+                </p>
+
+                <h2 class="section-title">Why Choose RinxoTrading?</h2>
+                <p class="section-text">
+                    At RINXO Trading, we focus on delivering exceptional service, backed by our dedication to your success. With a strategic, data-driven approach, we provide you with the tools and insights needed to navigate the complexities of the markets. Our commitment to transparency and reliability ensures that you have the support to make informed decisions and optimize your trading outcomes.
+                </p>
+                
+                <p class="section-text">
+                    Join our growing community of forex & crypto enthusiasts and traders today, and let us help you turn your trading aspirations into reality.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Counter animation function
+        function animateCounter(counter) {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000; // Animation duration in milliseconds
+            const steps = 50; // Number of steps in the animation
+            const stepDuration = duration / steps;
+            const increment = target / steps;
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, stepDuration);
+        }
+
+        // Intersection Observer to trigger counter animation when visible
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => animateCounter(counter));
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Start observing when document is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsContainer = document.querySelector('.stats-container');
+            if (statsContainer) {
+                observer.observe(statsContainer);
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* Results Page Styles */
+        .results-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            padding: 80px 5% 0;
+            position: relative;
+        }
+
+        .results-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        .text-section {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .main-heading {
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .stats-section {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+            gap: 4rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 5rem;
+            color: #39FF14;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+        }
+
+        .stat-text {
+            color: #ffffff;
+            font-size: 1.1rem;
+            max-width: 200px;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .results-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .main-heading {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html" class="active">Results</a>
+            <a href="packages.html">Packages</a>
+            <a href="community.html">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Results Section -->
+    <div class="results-section" style="background-image: url('results.jpg');">
+        <div class="results-content">
+            <div class="text-section">
+                <h1 class="main-heading"> We believe that strategy and precision are the foundations of successful trading.</h1>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-text">Average winrate over our last months</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">190%</div>
+                    <div class="stat-text">Average profit for members over our last months</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: transparent;
+            color: #000000;
+        }
+
+        /* Packages Section Styles */
+        .packages-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 120px 5% 50px;
+            position: relative;
+        }
+
+        .packages-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .packages-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .packages-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .packages-title {
+            font-size: 4rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .packages-subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .toggle-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #39FF14;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .toggle-btn.active {
+            background: #39FF14;
+            color: #000000;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #39FF14;
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 600px;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .package-name {
+            font-size: 1.8rem;
+            color: #39FF14;
+            margin-bottom: 1rem;
+        }
+
+        .package-price {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: #39FF14;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            flex-grow: 1;
+        }
+
+        .feature-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: #39FF14;
+        }
+
+        .package-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #39FF14;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #39FF14;
+            margin-top: auto;
+        }
+
+        .package-btn:hover {
+            background: #000000;
+            color: #39FF14;
+        }
+
+        @media (max-width: 1200px) {
+            .packages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            .packages-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html" class="active">Packages</a>
+            <a href="community.html">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Packages Section -->
+    <div class="packages-section" style="background-image: url('pack1.jpg');">
+        <div class="packages-overlay"></div>
+        <div class="packages-content">
+            <div class="packages-header">
+                <h1 class="packages-title">Our membership packages</h1>
+                <p class="packages-subtitle">Find the perfect membership plan for you and take the first step toward mastering crypto trading with RINXO Trading today!</p>
+                
+                <div class="toggle-container">
+                    <button class="toggle-btn active" id="monthlyBtn">Monthly</button>
+                    <button class="toggle-btn" id="sixMonthBtn">Six Months</button>
+                </div>
+            </div>
+
+            <div class="packages-grid">
+                <!-- Free Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Free Pack</h2>
+                        <div class="package-price">0€</div>
+                        <ul class="features-list">
+                            <li class="feature-item">Market Analysis</li>
+                            <li class="feature-item">Weekly Newsletters</li>
+                            <li class="feature-item">Weekly free signal</li>
+                            <li class="feature-item">News Coverage</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Try for free</button>
+                </div>
+
+                <!-- Starter Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Starter Pack</h2>
+                        <div class="package-price monthly-price">44.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">89.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex Pairs Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">XAUUSD Signals</li>
+                            <li class="feature-item">Risk Managment</li>
+                            <li class="feature-item">TA Analysis</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get started</button>
+                </div>
+
+                <!-- Basic Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Basic Pack</h2>
+                        <div class="package-price monthly-price">64.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">104.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex & XAUUSD Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">TA Analysis</li>
+                            <li class="feature-item">Risk Management</li>
+                            <li class="feature-item">Copy Trading our EA</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get started</button>
+                </div>
+
+                <!-- Pro Pack -->
+                <div class="package-card">
+                    <div class="package-content">
+                        <h2 class="package-name">Pro Pack</h2>
+                        <div class="package-price monthly-price">89.99€</div>
+                        <div class="package-price sixmonth-price" style="display: none;">149.99€</div>
+                        <span class="price-period">/ month</span>
+                        <ul class="features-list">
+                            <li class="feature-item">Forex & XAUUSD Signals</li>
+                            <li class="feature-item">Crypto Signals</li>
+                            <li class="feature-item">TA & Fundamental Analysis</li>
+                            <li class="feature-item">Risk Managment</li>
+                            <li class="feature-item">Rinxo Trading Course</li>
+                            <li class="feature-item">Copy Trading our EA</li>
+                            <li class="feature-item">Live Stream 3x Weekly</li>
+                        </ul>
+                    </div>
+                    <button class="package-btn">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePricing(period) {
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const sixMonthPrices = document.querySelectorAll('.sixmonth-price');
+            const monthlyBtn = document.getElementById('monthlyBtn');
+            const sixMonthBtn = document.getElementById('sixMonthBtn');
+            const periodTexts = document.querySelectorAll('.price-period');
+            
+            if (period === 'monthly') {
+                monthlyPrices.forEach(price => price.style.display = 'block');
+                sixMonthPrices.forEach(price => price.style.display = 'none');
+                monthlyBtn.classList.add('active');
+                sixMonthBtn.classList.remove('active');
+                periodTexts.forEach(text => text.textContent = '/ month');
+            } else {
+                monthlyPrices.forEach(price => price.style.display = 'none');
+                sixMonthPrices.forEach(price => price.style.display = 'block');
+                monthlyBtn.classList.remove('active');
+                sixMonthBtn.classList.add('active');
+                periodTexts.forEach(text => text.textContent = '/ 6 months');
+            }
+        }
+
+        // Initialize everything when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const monthlyBtn = document.getElementById('monthlyBtn');
+            const sixMonthBtn = document.getElementById('sixMonthBtn');
+
+            // Add click event listeners
+            monthlyBtn.addEventListener('click', () => togglePricing('monthly'));
+            sixMonthBtn.addEventListener('click', () => togglePricing('sixMonths'));
+
+            // Set initial state
+            togglePricing('monthly');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after, .nav-middle a.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: transparent;
+            color: #000000;
+        }
+
+        .community-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            padding: 120px 5% 50px;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .community-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .community-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .community-title {
+            font-size: 4rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        .community-description {
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .community-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #39FF14;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .community-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .community-card-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .community-card-title {
+            font-size: 1.8rem;
+            color: #39FF14;
+            margin-bottom: 1rem;
+        }
+
+        .community-card-description {
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .join-btn {
+            background: #39FF14;
+            color: #000000;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid #39FF14;
+        }
+
+        .join-btn:hover {
+            background: transparent;
+            color: #39FF14;
+        }
+
+        @media (max-width: 768px) {
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .community-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html">Packages</a>
+            <a href="community.html" class="active">Community</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Community Section with Background Image -->
+    <section class="community-section" style="background-image: url('fninal1.avif');">
+        <div class="overlay"></div>
+        <div class="community-content">
+            <div class="community-header">
+                <h1 class="community-title">Join our community</h1>
+                <p class="community-description">Join our expanding network of forexs and enthusiasts, and arm yourself with the insights and tools required to make smart choices and enhance your earning potential.</p>
+            </div>
+
+            <div class="community-grid">
+                <!-- RinxoTrading Community Card -->
+                <div class="community-card">
+                    <img src="PaBgLogo.png" alt="RinxoTrading" class="community-card-icon">
+                    <h2 class="community-card-title">RinxoTrading</h2>
+                    <p class="community-card-description">Join RinxoTrading community on Telegram for exclusive trading signals, market analysis, and expert insights.</p>
+                    <a href="#" class="join-btn">Join for free</a>
+                </div>
+
+                <!-- VIP Community Card -->
+                <div class="community-card">
+                    <img src="PaBgLogo.png" alt="VIP Community" class="community-card-icon">
+                    <h2 class="community-card-title">Illyrian Trading</h2>
+                    <p class="community-card-description">Join Illyrian Trading community on Discord for exclusive trading signals, market analysis, and expert insights.</p>
+                    <a href="#" class="join-btn">Join for free</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - RinxoTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #39FF14;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .brand-name {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-middle a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-middle a:hover, .nav-middle a.active {
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .nav-middle a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-middle a:hover::after, .nav-middle a.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .contact-btn {
+            background-color: #000000;
+            color: #39FF14;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+        }
+
+        .contact-btn:hover {
+            background-color: transparent;
+            color: #000000;
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            padding: 120px 5% 50px;
+            position: relative;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-left {
+            color: #ffffff;
+        }
+
+        .contact-title {
+            font-size: 4rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            color: #39FF14;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #ffffff;
+        }
+
+        .contact-form {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid #39FF14;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #39FF14;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .message-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .send-btn {
+            background: #39FF14;
+            color: #000000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .send-btn:hover {
+            background: transparent;
+            color: #39FF14;
+            border: 2px solid #39FF14;
+        }
+
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="PaBgLogo.png" alt="Rinxo Trading Logo" class="logo">
+            <span class="brand-name">RinxoTrading</span>
+        </div>
+        
+        <div class="nav-middle">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="results.html">Results</a>
+            <a href="packages.html">Packages</a>
+            <a href="community.html">Community</a>
+            <a href="contact.html" class="active">Contact</a>
+        </div>
+        
+        <div class="nav-right">
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact-section" style="background-image: url('concat2.jpg');">
+        <div class="overlay"></div>
+        <div class="contact-content">
+            <div class="contact-left">
+                <h1 class="contact-title">Get in touch</h1>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="mailto:info@rinxotrading.com" class="contact-link">rinxotrading@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="tel:+383484804333" class="contact-link">+383 44 386 663 </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-right">
+                <form class="contact-form">
+                    <input type="text" placeholder="Name: *" class="form-input" required>
+                    <input type="email" placeholder="Email: *" class="form-input" required>
+                    <textarea placeholder="Message: *" class="form-input message-input" required></textarea>
+                    <button type="submit" class="send-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>
